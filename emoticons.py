@@ -11,8 +11,10 @@ mycompile = lambda pat:  re.compile(pat,  re.UNICODE)
 #SMILEY = mycompile(r'[:=].{0,1}[\)dpD]')
 #MULTITOK_SMILEY = mycompile(r' : [\)dp]')
 
+Hair = r'(|[?])'
 NormalEyes = r'[:=]'
 Wink = r'[;]'
+CryEyes = r":'"
 
 NoseArea = r'(|o|O|-)'   ## rather tight precision, \S might be reasonable...
 
@@ -29,9 +31,10 @@ Tongue_RE = mycompile(NormalEyes + NoseArea + Tongue)
 Other_RE = mycompile( '('+NormalEyes+'|'+Wink+')'  + NoseArea + OtherMouths )
 
 Emoticon = (
-    "("+NormalEyes+"|"+Wink+")" +
-    NoseArea + 
-    "("+Tongue+"|"+OtherMouths+"|"+SadMouths+"|"+HappyMouths+")"
+  Hair +
+  "("+NormalEyes+"|"+Wink+"|"+CryEyes+")" +
+  NoseArea +
+  "("+Tongue+"|"+OtherMouths+"|"+SadMouths+"|"+HappyMouths+")"
 )
 Emoticon_RE = mycompile(Emoticon)
 
@@ -65,4 +68,3 @@ if __name__=='__main__':
     import sane_re
     sane_re._S(line[:-1]).show_match(Emoticon_RE, numbers=False)
     #print(analyze_tweet(line.strip()), line.strip(), sep="\t")
-
